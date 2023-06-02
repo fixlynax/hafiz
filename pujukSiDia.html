@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Persuasion Website</title>
+    <style>
+      /* CSS styling goes here */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2; /* Light gray background color */
+      }
+
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333; /* Dark gray header color */
+      }
+
+      h2 {
+        text-align: center;
+        font-style: italic;
+        color: #333; /* Dark gray header color */
+        margin-top: 0px;
+        font-size: 14px;
+      }
+
+      #apology-text {
+        font-size: 16px;
+        line-height: 1.5;
+        margin-bottom: 20px;
+        color: #333; /* Dark gray text color */
+        text-align: justify;
+      }
+
+      #attract-button {
+        display: block;
+        width: 150px;
+        margin: 0 auto;
+        padding: 10px;
+        background-color: #333; /* Dark gray button color */
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 4px;
+        font-size: 16px;
+      }
+
+      /* Modal styles */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 100px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.7);
+      }
+
+      .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 60%;
+        max-width: 500px;
+        text-align: center;
+      }
+
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .image-container {
+        display: flex;
+        justify-content: center;
+        margin: auto;
+        position: relative;
+        width: 400px;
+        height: 350px;
+      }
+
+      .image-container img {
+        width: 100%;
+        height: 100%;
+        margin: 5px;
+        border-radius: 4px;
+        object-fit: cover;
+      }
+
+      .prev,
+      .next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 30px;
+        color: #333;
+        cursor: pointer;
+      }
+
+      .prev {
+        left: 10px;
+      }
+
+      .next {
+        right: 10px;
+      }
+
+      .fade {
+        animation: fadeEffect 1s;
+      }
+
+      @keyframes fadeEffect {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .love-text {
+        color: #530d30; /* Pink text color */
+        position: relative;
+        animation: blink 1s linear infinite; /* Blinking text animation */
+      }
+
+      .rain {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+        background-image: url("heart.png"); /* Replace with the path to your heart image */
+        background-repeat: repeat;
+        animation: rainEffect 1s linear infinite; /* Rain effect animation */
+      }
+
+      @keyframes blink {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes rainEffect {
+        0% {
+          background-position: 0 0;
+        }
+        100% {
+          background-position: 0 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Persuasion Website</h1>
+      <h2>by Muhammad Hafizuddin</h2>
+
+      <div id="apology-text"></div>
+
+      <a href="#" id="attract-button">Click here to see how I've changed</a>
+
+      <!-- Modal popup -->
+      <div id="myModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <p class="love-text">Sudin Sayang Qiqesh</p>
+          <div class="image-container"></div>
+          <div class="prev">&#10094;</div>
+          <div class="next">&#10095;</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // JavaScript code goes here
+      const attractButton = document.getElementById("attract-button");
+      const modal = document.getElementById("myModal");
+      const closeButton = document.getElementsByClassName("close")[0];
+      const apologyText = document.getElementById("apology-text");
+      const images = ["sayang1.jpg", "sayang2.jpg", "sayang3.jpg"];
+      let currentImageIndex = 0;
+
+      // Rain of love effect
+      function createLoveElement() {
+        const love = document.createElement("span");
+        love.innerHTML = "❤";
+        love.style.position = "absolute";
+        love.style.top = Math.random() * 100 + "%";
+        love.style.left = Math.random() * 100 + "%";
+        love.style.fontSize = Math.random() * 50 + 10 + "px";
+        love.style.color = getRandomColor();
+        love.style.pointerEvents = "none";
+        document.body.appendChild(love);
+
+        setTimeout(() => {
+          love.remove();
+        }, 20000);
+      }
+
+      function getRandomColor() {
+        const colors = ["#FF69B4", "#FFC0CB", "#FF1493", "#FF00FF", "#FFB6C1"];
+        const randomIndex = Math.floor(Math.random() * colors.length);
+        return colors[randomIndex];
+      }
+
+      attractButton.addEventListener("click", function () {
+        modal.style.display = "block";
+        apologyText.innerHTML = ""; // Clear previous text
+
+        // Typing effect for apology text
+        const text =
+          "<p> Dear Siti Nurbalqis,</p><p> I would like to apologize for all the mistakes I have made. I deeply regret my actions and the pain I may have caused you.</p><p> Through this website, I want to express my sincere apologies and my commitment to change. I understand the gravity of the situation, and I want to assure you that I have reflected on my behavior and have learned from my mistakes.</p><p> I hope you can find it in your heart to forgive me. Your happiness and well-being mean a lot to me, and I am willing to do whatever it takes to make amends and regain your trust.</p><p> Thank you for taking the time to visit this website and considering my apology. I hope we can find a way to move forward and rebuild our relationship.</p>";
+        let words = text.split(" ");
+        let i = 0;
+        let timer = setInterval(function () {
+          if (i < words.length) {
+            apologyText.innerHTML += words[i] + " ";
+            i++;
+          } else {
+            clearInterval(timer);
+          }
+        }, 100);
+
+        // Rain of love effect
+        for (let i = 0; i < 50; i++) {
+          setTimeout(createLoveElement, i * 100);
+        }
+      });
+
+      closeButton.addEventListener("click", function () {
+        modal.style.display = "none";
+      });
+
+      window.addEventListener("click", function (event) {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+
+      // Slideshow functionality for the modal
+      const imageContainer = document.querySelector(".image-container");
+      const prevButton = document.querySelector(".prev");
+      const nextButton = document.querySelector(".next");
+
+      function showImage(index) {
+        const image = document.createElement("img");
+        image.src = images[index];
+        imageContainer.innerHTML = "";
+        imageContainer.appendChild(image);
+        image.classList.add("fade");
+
+        const loveText = document.querySelector(".love-text");
+        const rain = document.createElement("div");
+        rain.classList.add("rain");
+        loveText.appendChild(rain);
+      }
+
+      function navigateSlides(direction) {
+        if (direction === "prev") {
+          currentImageIndex =
+            (currentImageIndex - 1 + images.length) % images.length;
+        } else if (direction === "next") {
+          currentImageIndex = (currentImageIndex + 1) % images.length;
+        }
+        showImage(currentImageIndex);
+      }
+
+      prevButton.addEventListener("click", function () {
+        navigateSlides("prev");
+      });
+
+      nextButton.addEventListener("click", function () {
+        navigateSlides("next");
+      });
+
+      // Show the first image initially
+      showImage(currentImageIndex);
+    </script>
+  </body>
+</html>
